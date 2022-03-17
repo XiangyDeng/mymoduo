@@ -1,0 +1,47 @@
+[
+{
+  "directory": "/home/melody/mymoduo/build",
+  "command": "/usr/bin/x86_64-linux-gnu-g++-7 -Dmymuduo_EXPORTS   -g -std=c++11 -g -fPIC -o CMakeFiles/mymuduo.dir/Channel.o -c /home/melody/mymoduo/Channel.cpp",
+  "file": "/home/melody/mymoduo/Channel.cpp"
+},
+{
+  "directory": "/home/melody/mymoduo/build",
+  "command": "/usr/bin/x86_64-linux-gnu-g++-7 -Dmymuduo_EXPORTS   -g -std=c++11 -g -fPIC -o CMakeFiles/mymuduo.dir/DefaultPoller.o -c /home/melody/mymoduo/DefaultPoller.cpp",
+  "file": "/home/melody/mymoduo/DefaultPoller.cpp"
+},
+{
+  "directory": "/home/melody/mymoduo/build",
+  "command": "/usr/bin/x86_64-linux-gnu-g++-7 -Dmymuduo_EXPORTS   -g -std=c++11 -g -fPIC -o CMakeFiles/mymuduo.dir/EpollPoller.o -c /home/melody/mymoduo/EpollPoller.cpp",
+  "file": "/home/melody/mymoduo/EpollPoller.cpp"
+},
+{
+  "directory": "/home/melody/mymoduo/build",
+  "command": "/usr/bin/x86_64-linux-gnu-g++-7 -Dmymuduo_EXPORTS   -g -std=c++11 -g -fPIC -o CMakeFiles/mymuduo.dir/EventLoop.o -c /home/melody/mymoduo/EventLoop.cpp",
+  "file": "/home/melody/mymoduo/EventLoop.cpp"
+},
+{
+  "directory": "/home/melody/mymoduo/build",
+  "command": "/usr/bin/x86_64-linux-gnu-g++-7 -Dmymuduo_EXPORTS   -g -std=c++11 -g -fPIC -o CMakeFiles/mymuduo.dir/InetAddress.o -c /home/melody/mymoduo/InetAddress.cpp",
+  "file": "/home/melody/mymoduo/InetAddress.cpp"
+},
+{
+  "directory": "/home/melody/mymoduo/build",
+  "command": "/usr/bin/x86_64-linux-gnu-g++-7 -Dmymuduo_EXPORTS   -g -std=c++11 -g -fPIC -o CMakeFiles/mymuduo.dir/Logger.o -c /home/melody/mymoduo/Logger.cpp",
+  "file": "/home/melody/mymoduo/Logger.cpp"
+},
+{
+  "directory": "/home/melody/mymoduo/build",
+  "command": "/usr/bin/x86_64-linux-gnu-g++-7 -Dmymuduo_EXPORTS   -g -std=c++11 -g -fPIC -o CMakeFiles/mymuduo.dir/Poller.o -c /home/melody/mymoduo/Poller.cpp",
+  "file": "/home/melody/mymoduo/Poller.cpp"
+},
+{
+  "directory": "/home/melody/mymoduo/build",
+  "command": "/usr/bin/x86_64-linux-gnu-g++-7 -Dmymuduo_EXPORTS   -g -std=c++11 -g -fPIC -o CMakeFiles/mymuduo.dir/TcpServer.o -c /home/melody/mymoduo/TcpServer.cpp",
+  "file": "/home/melody/mymoduo/TcpServer.cpp"
+},
+{
+  "directory": "/home/melody/mymoduo/build",
+  "command": "/usr/bin/x86_64-linux-gnu-g++-7 -Dmymuduo_EXPORTS   -g -std=c++11 -g -fPIC -o CMakeFiles/mymuduo.dir/Timestamp.o -c /home/melody/mymoduo/Timestamp.cpp",
+  "file": "/home/melody/mymoduo/Timestamp.cpp"
+}
+]
