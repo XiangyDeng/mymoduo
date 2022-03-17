@@ -5,6 +5,7 @@
 
 #include"noncopyable.h"
 #include"Timestamp.h"
+#include "EventLoop.h"
 
 class Channel;
 
@@ -31,7 +32,7 @@ class Poller : noncopyable {
   static Poller* newDefaultPoller(EventLoop *loop);
  protected:
   // map的key：sockfd ， value：socket所属的channel通道类型
-  using ChannelMap = std::unordered_map<int, channel*>;
+  using ChannelMap = std::unordered_map<int, Channel*>;
   ChannelMap channels_;
 
  private: 

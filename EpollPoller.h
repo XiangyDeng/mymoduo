@@ -2,8 +2,20 @@
 
 #include <vector>
 #include <sys/epoll.h>
-#include ""
+#include "Poller.h"
+#include "EventLoop.h"
+#include "Timestamp.h" 
 
+// 只使用了指针类型，故只使用前置声明
+class Channel;
+
+/**
+ * @brief epoll的使用的
+ *        epoll_create
+ *        epoll_ctl   add/mod/del
+ *        epoll_wait
+ * 
+ */
 class EpollPoller : public Poller {
  public:
   EpollPoller(EventLoop *loop);
@@ -19,7 +31,9 @@ class EpollPoller : public Poller {
  private:
   static const int kInitEventListSize = 16;
 
+  // 填写活跃的链接
   void fillActiveChannels(int numEvents, ChannelList *activeChannels) const;
+  // 更新Channel通道（epoll_ctl的调用）
   void update(int operation, Channel *channel);
 
   using EventList = std::vector<epoll_event>;
