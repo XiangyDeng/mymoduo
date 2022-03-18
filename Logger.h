@@ -32,7 +32,7 @@
             snprintf(buf, 1024, LogmsgFormat, ##__VA_ARGS__); \
             logger.log(buf); \
             exit(-1); \
-        } while(0)
+        } while(0)  
 
 #ifdef MUDEGUB
 #define LOG_DEBUG(LogmsgFormat, ...) \
