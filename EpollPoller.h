@@ -39,6 +39,6 @@ class EpollPoller : public Poller {
   using EventList = std::vector<epoll_event>;
 
   int epollfd_;
-  EventList events_;
+  EventList events_;  // 发生的事件
 
 };

@@ -15,6 +15,7 @@ CMakeFiles/mymuduo.dir/DefaultPoller.o
  /home/melody/mymoduo/Timestamp.h
  /home/melody/mymoduo/noncopyable.h
 CMakeFiles/mymuduo.dir/EpollPoller.o
+ /home/melody/mymoduo/Channel.h
  /home/melody/mymoduo/EpollPoller.cpp
  /home/melody/mymoduo/EpollPoller.h
  /home/melody/mymoduo/EventLoop.h
