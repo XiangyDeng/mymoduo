@@ -68,6 +68,14 @@ void EventLoop::loop() {
 
 }
 // 退出事件循环
+/**
+ * 退出事件循环：1.loop在自己的线程中调用quit 2. 在非loop的线程中，调用loop的quit 
+ *                       mainLoop
+ *                                    
+ *                              no ============ 生产者-消费者的线程安全的队列(改进点)
+ * 
+ *        subLoop1      subLoop2        subLoop3
+ */
 void EventLoop::quit() {
   looping_ = true;
   quit_ = false;
@@ -98,12 +106,72 @@ void EventLoop::quit() {
   looping_ = false;
 }
 
+// 在当前loop中执行cb
+void EventLoop::runInLoop(Functor cb) {
+  if (isInLoopThread()) { // 在当前的loop线程中，执行cb；
+    cb();
+  } else {  // 在非当前loop线程中执行cb，就需要唤醒loop所在线程，执行cb
+    queueInLoop(cb);
+  }
+}
+// 把cb放入到队列中，唤醒loop所在线程，执行cb
+void EventLoop::queueInLoop(Functor cb) {
+  {
+    std::unique_lock<std::mutex> lock(mutex_);
+    pendingFunctors_.emplace_back(cb);
+  }
+  
+  // 唤醒相应的，需要执行上面回调操作的loop的线程
+  // callingPendingFunctors_表示当前loop正在执行回调，但是loop又有了新的回调
+  if (!isInLoopThread() || callingPendingFunctors_) { 
+    wakeup();
+  }
+}
+
 void EventLoop::handleRead() {
   uint64_t one = 1;
   ssize_t n = read(wakeupFd_, &one, sizeof one);
   if(n != sizeof one) {
     LOG_ERROR("EventLoop::handleRead() reads %lu bytes instead of 8", n);
   }
+}
+
+// 用来唤醒loop所在线程:向wakeupfd_写一个数据, wakeupChannel就发生读事件，当前loop线程就会被唤醒
+void EventLoop::wakeup() {
+  uint64_t one = 1;
+  ssize_t n = write(wakeupFd_ , &one, sizeof one);
+  if (n != sizeof one) {
+    LOG_ERROR("EventLoop::wakeup() writes %lu bytes instead of 8 \n", n);
+  }
+}
+
+// EventLoop的方法 => Poller的方法
+void EventLoop::updateChannel(Channel *channel) {
+  poller_->updateChannel(channel);
+}
+
+void EventLoop::removeChannel(Channel *channel) {
+  poller_->removeChannel(channel);
+}
+
+bool EventLoop::hasChannel(Channel *channel) {
+  poller_->hasChannel(channel);
+}
+
+void EventLoop::doPendingFunctors() {
+  std::vector<Functor> functors;
+  callingPendingFunctors_ = true;
+
+  {
+    std::unique_lock<std::mutex> lock(mutex_);
+    functors.swap(pendingFunctors_);  // pendingFunctors_清零，避免阻塞
+  }
+
+  for (const Functor &functor : functors) {
+    functor();
+  }
+
+  callingPendingFunctors_ = false;
 }
 
 
