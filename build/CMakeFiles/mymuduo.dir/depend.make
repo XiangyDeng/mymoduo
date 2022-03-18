@@ -3,17 +3,22 @@
 
 CMakeFiles/mymuduo.dir/Channel.o: ../Channel.cpp
 CMakeFiles/mymuduo.dir/Channel.o: ../Channel.h
+CMakeFiles/mymuduo.dir/Channel.o: ../CurrentThread.h
 CMakeFiles/mymuduo.dir/Channel.o: ../EventLoop.h
 CMakeFiles/mymuduo.dir/Channel.o: ../Logger.h
 CMakeFiles/mymuduo.dir/Channel.o: ../Timestamp.h
 CMakeFiles/mymuduo.dir/Channel.o: ../noncopyable.h
 
+CMakeFiles/mymuduo.dir/DefaultPoller.o: ../CurrentThread.h
 CMakeFiles/mymuduo.dir/DefaultPoller.o: ../DefaultPoller.cpp
+CMakeFiles/mymuduo.dir/DefaultPoller.o: ../EpollPoller.h
 CMakeFiles/mymuduo.dir/DefaultPoller.o: ../EventLoop.h
 CMakeFiles/mymuduo.dir/DefaultPoller.o: ../Poller.h
 CMakeFiles/mymuduo.dir/DefaultPoller.o: ../Timestamp.h
 CMakeFiles/mymuduo.dir/DefaultPoller.o: ../noncopyable.h
 
+CMakeFiles/mymuduo.dir/EpollPoller.o: ../Channel.h
+CMakeFiles/mymuduo.dir/EpollPoller.o: ../CurrentThread.h
 CMakeFiles/mymuduo.dir/EpollPoller.o: ../EpollPoller.cpp
 CMakeFiles/mymuduo.dir/EpollPoller.o: ../EpollPoller.h
 CMakeFiles/mymuduo.dir/EpollPoller.o: ../EventLoop.h
@@ -22,8 +27,14 @@ CMakeFiles/mymuduo.dir/EpollPoller.o: ../Poller.h
 CMakeFiles/mymuduo.dir/EpollPoller.o: ../Timestamp.h
 CMakeFiles/mymuduo.dir/EpollPoller.o: ../noncopyable.h
 
+CMakeFiles/mymuduo.dir/EventLoop.o: ../Channel.h
+CMakeFiles/mymuduo.dir/EventLoop.o: ../CurrentThread.h
 CMakeFiles/mymuduo.dir/EventLoop.o: ../EventLoop.cpp
 CMakeFiles/mymuduo.dir/EventLoop.o: ../EventLoop.h
+CMakeFiles/mymuduo.dir/EventLoop.o: ../Logger.h
+CMakeFiles/mymuduo.dir/EventLoop.o: ../Poller.h
+CMakeFiles/mymuduo.dir/EventLoop.o: ../Timestamp.h
+CMakeFiles/mymuduo.dir/EventLoop.o: ../noncopyable.h
 
 CMakeFiles/mymuduo.dir/InetAddress.o: ../InetAddress.cpp
 CMakeFiles/mymuduo.dir/InetAddress.o: ../InetAddress.h
@@ -34,6 +45,7 @@ CMakeFiles/mymuduo.dir/Logger.o: ../Timestamp.h
 CMakeFiles/mymuduo.dir/Logger.o: ../noncopyable.h
 
 CMakeFiles/mymuduo.dir/Poller.o: ../Channel.h
+CMakeFiles/mymuduo.dir/Poller.o: ../CurrentThread.h
 CMakeFiles/mymuduo.dir/Poller.o: ../EventLoop.h
 CMakeFiles/mymuduo.dir/Poller.o: ../Poller.cpp
 CMakeFiles/mymuduo.dir/Poller.o: ../Poller.h

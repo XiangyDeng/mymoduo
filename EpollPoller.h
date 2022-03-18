@@ -3,7 +3,6 @@
 #include <vector>
 #include <sys/epoll.h>
 #include "Poller.h"
-#include "EventLoop.h"
 #include "Timestamp.h" 
 
 // 只使用了指针类型，故只使用前置声明
@@ -25,8 +24,6 @@ class EpollPoller : public Poller {
   Timestamp poll(int timeoutMS, ChannelList *activeChannel) override;
   void updateChannel(Channel *channel) override;
   void removeChannel(Channel *channel) override;
-
-
 
  private:
   static const int kInitEventListSize = 16;

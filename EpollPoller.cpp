@@ -1,5 +1,7 @@
 #include "EpollPoller.h"
+#include "Poller.h"
 #include "Logger.h"
+#include "Channel.h"
 
 #include <errno.h>
 #include <unistd.h>
@@ -13,7 +15,7 @@ EpollPoller::EpollPoller(EventLoop *loop)
       epollfd_(::epoll_create(EPOLL_CLOEXEC)),
       events_(kInitEventListSize) {
       if(epollfd_ < 0) {
-        LOG_FATAL("epoll_create error: ", errno);
+        LOG_FATAL("epoll_create error: %d \n", errno);
       }
     
     }

@@ -5,15 +5,16 @@
 #include <vector>
 #include <atomic>
 #include <mutex>
+
 #include "noncopyable.h"
 #include "Timestamp.h"
 #include "CurrentThread.h"
-
 
 class Channel;
 class Poller;
 
 // 事件循环类：主要包含了两个模块 Channel Poller（epoll的抽象）
+// 一个subReactor 就是一个 EventLoop
 // Reactor, at most one per thread
 class EventLoop : noncopyable {
  public:
@@ -58,7 +59,7 @@ class EventLoop : noncopyable {
   const pid_t threadId_;      // 记录当前loop所在线程的id
 
   Timestamp pollReturnTime_;  // poller返回发生事件的channels的时间点
-  srd::unique_ptr<Poller> poller_; 
+  std::unique_ptr<Poller> poller_; 
 
   int wakeupFd_; // 作用：当mainLoop获取一个新用户的channel，通过轮询算法选择一个subloop，通过该成员唤醒subloop处理channel
   std::unique_ptr<Channel> wakeupChannel_;

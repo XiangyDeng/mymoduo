@@ -1,13 +1,14 @@
 #pragma once
 
-#include<vector>
-#include<unordered_map>
+#include <vector>
+#include <unordered_map>
 
-#include"noncopyable.h"
-#include"Timestamp.h"
+#include "noncopyable.h"
+#include "Timestamp.h"
 #include "EventLoop.h"
 
 class Channel;
+class EventLoop;
 
 /**
  * @brief 多路事件分发器的核心IO复用模块
@@ -18,7 +19,7 @@ class Poller : noncopyable {
   using ChannelList = std::vector<Channel*>;
 
   Poller(EventLoop *loop);
-  virtual ~Poller();
+  virtual ~Poller() = default;
 
   // 给所有IO复用保留统一的接口
   virtual Timestamp poll(int timeoutMS, ChannelList *activeChannel) = 0;
