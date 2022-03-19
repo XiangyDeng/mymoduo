@@ -12,7 +12,7 @@ class Thread : noncopyable {
  public:
   using ThreadFunc = std::function<void()>;
 
-  explicit Thread(ThreadFunc, const std::string &name = string());
+  explicit Thread(ThreadFunc, const std::string &name = std::string());
   ~Thread();
 
   void start();
@@ -37,4 +37,4 @@ class Thread : noncopyable {
 
 
 
-}
+};

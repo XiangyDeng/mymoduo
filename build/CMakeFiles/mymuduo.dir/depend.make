@@ -9,6 +9,9 @@ CMakeFiles/mymuduo.dir/Channel.o: ../Logger.h
 CMakeFiles/mymuduo.dir/Channel.o: ../Timestamp.h
 CMakeFiles/mymuduo.dir/Channel.o: ../noncopyable.h
 
+CMakeFiles/mymuduo.dir/CurrentThread.o: ../CurrentThread.cpp
+CMakeFiles/mymuduo.dir/CurrentThread.o: ../CurrentThread.h
+
 CMakeFiles/mymuduo.dir/DefaultPoller.o: ../CurrentThread.h
 CMakeFiles/mymuduo.dir/DefaultPoller.o: ../DefaultPoller.cpp
 CMakeFiles/mymuduo.dir/DefaultPoller.o: ../EpollPoller.h
@@ -54,6 +57,11 @@ CMakeFiles/mymuduo.dir/Poller.o: ../noncopyable.h
 
 CMakeFiles/mymuduo.dir/TcpServer.o: ../TcpServer.cpp
 CMakeFiles/mymuduo.dir/TcpServer.o: ../TcpServer.h
+
+CMakeFiles/mymuduo.dir/Thread.o: ../CurrentThread.h
+CMakeFiles/mymuduo.dir/Thread.o: ../Thread.cpp
+CMakeFiles/mymuduo.dir/Thread.o: ../Thread.h
+CMakeFiles/mymuduo.dir/Thread.o: ../noncopyable.h
 
 CMakeFiles/mymuduo.dir/Timestamp.o: ../Timestamp.cpp
 CMakeFiles/mymuduo.dir/Timestamp.o: ../Timestamp.h

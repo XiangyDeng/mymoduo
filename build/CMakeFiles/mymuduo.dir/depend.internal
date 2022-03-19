@@ -9,6 +9,9 @@ CMakeFiles/mymuduo.dir/Channel.o
  /home/melody/mymoduo/Logger.h
  /home/melody/mymoduo/Timestamp.h
  /home/melody/mymoduo/noncopyable.h
+CMakeFiles/mymuduo.dir/CurrentThread.o
+ /home/melody/mymoduo/CurrentThread.cpp
+ /home/melody/mymoduo/CurrentThread.h
 CMakeFiles/mymuduo.dir/DefaultPoller.o
  /home/melody/mymoduo/CurrentThread.h
  /home/melody/mymoduo/DefaultPoller.cpp
@@ -55,6 +58,11 @@ CMakeFiles/mymuduo.dir/Poller.o
 CMakeFiles/mymuduo.dir/TcpServer.o
  /home/melody/mymoduo/TcpServer.cpp
  /home/melody/mymoduo/TcpServer.h
+CMakeFiles/mymuduo.dir/Thread.o
+ /home/melody/mymoduo/CurrentThread.h
+ /home/melody/mymoduo/Thread.cpp
+ /home/melody/mymoduo/Thread.h
+ /home/melody/mymoduo/noncopyable.h
 CMakeFiles/mymuduo.dir/Timestamp.o
  /home/melody/mymoduo/Timestamp.cpp
  /home/melody/mymoduo/Timestamp.h
