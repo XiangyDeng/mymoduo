@@ -4,17 +4,17 @@
 #include "EventLoop.h"
 
 
-EventLoopThread::EventLoopThread(const ThreadInitCallback &cb = ThreadInitCallback(), const std::string &name = std::string())
+EventLoopThread::EventLoopThread(const ThreadInitCallback &cb, const std::string &name)
     : loop_(nullptr)
     , exiting_(false)
-    , thread(std::bind(&EventLoopThread::threadFunc,this), name)
+    , thread_(std::bind(&EventLoopThread::threadFunc,this), name)
     , mutex_()
     , cond_()
     , callback_(cb) {
 }
 
 
-~EventLoopThread::EventLoopThread() {
+EventLoopThread::~EventLoopThread() {
   exiting_ = true;
   if (loop_ != nullptr) {
     loop_->quit();
@@ -23,7 +23,7 @@ EventLoopThread::EventLoopThread(const ThreadInitCallback &cb = ThreadInitCallba
 }
 
 // 新线程会自动创建EventLoop，并返回
-EventLoopThread* EventLoopThread::startloop() {
+EventLoop* EventLoopThread::startLoop() {
   thread_.start();  // 启动底层新线程
 
   EventLoop *loop = nullptr;
@@ -48,7 +48,7 @@ void EventLoopThread::threadFunc() {
 
   {
     std::unique_lock<std::mutex> lock(mutex_);
-    loop_ = loop;
+    loop_ = &loop;
     cond_.notify_one();
   }
 

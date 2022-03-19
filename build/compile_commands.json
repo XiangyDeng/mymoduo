@@ -1,6 +1,11 @@
 [
 {
   "directory": "/home/melody/mymoduo/build",
+  "command": "/usr/bin/x86_64-linux-gnu-g++-7 -Dmymuduo_EXPORTS   -g -std=c++11 -g -fPIC -o CMakeFiles/mymuduo.dir/Acceptor.o -c /home/melody/mymoduo/Acceptor.cpp",
+  "file": "/home/melody/mymoduo/Acceptor.cpp"
+},
+{
+  "directory": "/home/melody/mymoduo/build",
   "command": "/usr/bin/x86_64-linux-gnu-g++-7 -Dmymuduo_EXPORTS   -g -std=c++11 -g -fPIC -o CMakeFiles/mymuduo.dir/Channel.o -c /home/melody/mymoduo/Channel.cpp",
   "file": "/home/melody/mymoduo/Channel.cpp"
 },
@@ -26,6 +31,16 @@
 },
 {
   "directory": "/home/melody/mymoduo/build",
+  "command": "/usr/bin/x86_64-linux-gnu-g++-7 -Dmymuduo_EXPORTS   -g -std=c++11 -g -fPIC -o CMakeFiles/mymuduo.dir/EventLoopThread.o -c /home/melody/mymoduo/EventLoopThread.cpp",
+  "file": "/home/melody/mymoduo/EventLoopThread.cpp"
+},
+{
+  "directory": "/home/melody/mymoduo/build",
+  "command": "/usr/bin/x86_64-linux-gnu-g++-7 -Dmymuduo_EXPORTS   -g -std=c++11 -g -fPIC -o CMakeFiles/mymuduo.dir/EventLoopThreadPool.o -c /home/melody/mymoduo/EventLoopThreadPool.cpp",
+  "file": "/home/melody/mymoduo/EventLoopThreadPool.cpp"
+},
+{
+  "directory": "/home/melody/mymoduo/build",
   "command": "/usr/bin/x86_64-linux-gnu-g++-7 -Dmymuduo_EXPORTS   -g -std=c++11 -g -fPIC -o CMakeFiles/mymuduo.dir/InetAddress.o -c /home/melody/mymoduo/InetAddress.cpp",
   "file": "/home/melody/mymoduo/InetAddress.cpp"
 },
@@ -38,6 +53,11 @@
   "directory": "/home/melody/mymoduo/build",
   "command": "/usr/bin/x86_64-linux-gnu-g++-7 -Dmymuduo_EXPORTS   -g -std=c++11 -g -fPIC -o CMakeFiles/mymuduo.dir/Poller.o -c /home/melody/mymoduo/Poller.cpp",
   "file": "/home/melody/mymoduo/Poller.cpp"
+},
+{
+  "directory": "/home/melody/mymoduo/build",
+  "command": "/usr/bin/x86_64-linux-gnu-g++-7 -Dmymuduo_EXPORTS   -g -std=c++11 -g -fPIC -o CMakeFiles/mymuduo.dir/Socket.o -c /home/melody/mymoduo/Socket.cpp",
+  "file": "/home/melody/mymoduo/Socket.cpp"
 },
 {
   "directory": "/home/melody/mymoduo/build",

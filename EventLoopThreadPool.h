@@ -1,4 +1,4 @@
-#pragma 
+#pragma once
 
 #include <functional>
 #include <string>
@@ -26,13 +26,13 @@ class EventLoopThreadPool : noncopyable {
   std::vector<EventLoop*> getAllLoops();
 
   bool started() const { return started_; }
-  const std::string name() const { return nume_; }
+  const std::string name() const { return name_; }
 
  private:
   EventLoop *baseLoop_; // EventLoop loop: 最初始，由用户创建的loop
   std::string name_;
   bool started_;
-  int numThread_;
+  int numThreads_;
   int next_;
   std::vector<std::unique_ptr<EventLoopThread>> threads_;
   std::vector<EventLoop*> loops_;
