@@ -15,8 +15,6 @@ int main() {
   float sum_ = 0.0, slope_ = 0.0;
   float lastVal = -1.0;
 
-  unsigned seed1 = std::chrono::system_clock::now().time_since_epoch().count();
-  
   // 数据产生
   vector<float> vec(MAX_WINSIZE * 10);
   for (int i=0; i < vec.size(); ++i) {

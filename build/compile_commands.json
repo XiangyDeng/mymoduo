@@ -6,6 +6,11 @@
 },
 {
   "directory": "/home/melody/mymoduo/build",
+  "command": "/usr/bin/x86_64-linux-gnu-g++-7 -Dmymuduo_EXPORTS   -g -std=c++11 -g -fPIC -o CMakeFiles/mymuduo.dir/Buffer.o -c /home/melody/mymoduo/Buffer.cpp",
+  "file": "/home/melody/mymoduo/Buffer.cpp"
+},
+{
+  "directory": "/home/melody/mymoduo/build",
   "command": "/usr/bin/x86_64-linux-gnu-g++-7 -Dmymuduo_EXPORTS   -g -std=c++11 -g -fPIC -o CMakeFiles/mymuduo.dir/Channel.o -c /home/melody/mymoduo/Channel.cpp",
   "file": "/home/melody/mymoduo/Channel.cpp"
 },
@@ -58,6 +63,11 @@
   "directory": "/home/melody/mymoduo/build",
   "command": "/usr/bin/x86_64-linux-gnu-g++-7 -Dmymuduo_EXPORTS   -g -std=c++11 -g -fPIC -o CMakeFiles/mymuduo.dir/Socket.o -c /home/melody/mymoduo/Socket.cpp",
   "file": "/home/melody/mymoduo/Socket.cpp"
+},
+{
+  "directory": "/home/melody/mymoduo/build",
+  "command": "/usr/bin/x86_64-linux-gnu-g++-7 -Dmymuduo_EXPORTS   -g -std=c++11 -g -fPIC -o CMakeFiles/mymuduo.dir/TcpConnection.o -c /home/melody/mymoduo/TcpConnection.cpp",
+  "file": "/home/melody/mymoduo/TcpConnection.cpp"
 },
 {
   "directory": "/home/melody/mymoduo/build",

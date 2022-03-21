@@ -10,6 +10,9 @@ CMakeFiles/mymuduo.dir/Acceptor.o: ../Socket.h
 CMakeFiles/mymuduo.dir/Acceptor.o: ../Timestamp.h
 CMakeFiles/mymuduo.dir/Acceptor.o: ../noncopyable.h
 
+CMakeFiles/mymuduo.dir/Buffer.o: ../Buffer.cpp
+CMakeFiles/mymuduo.dir/Buffer.o: ../Buffer.h
+
 CMakeFiles/mymuduo.dir/Channel.o: ../Channel.cpp
 CMakeFiles/mymuduo.dir/Channel.o: ../Channel.h
 CMakeFiles/mymuduo.dir/Channel.o: ../CurrentThread.h
@@ -84,8 +87,32 @@ CMakeFiles/mymuduo.dir/Socket.o: ../Socket.cpp
 CMakeFiles/mymuduo.dir/Socket.o: ../Socket.h
 CMakeFiles/mymuduo.dir/Socket.o: ../noncopyable.h
 
+CMakeFiles/mymuduo.dir/TcpConnection.o: ../Buffer.h
+CMakeFiles/mymuduo.dir/TcpConnection.o: ../Callbacks.h
+CMakeFiles/mymuduo.dir/TcpConnection.o: ../Channel.h
+CMakeFiles/mymuduo.dir/TcpConnection.o: ../CurrentThread.h
+CMakeFiles/mymuduo.dir/TcpConnection.o: ../EventLoop.h
+CMakeFiles/mymuduo.dir/TcpConnection.o: ../InetAddress.h
+CMakeFiles/mymuduo.dir/TcpConnection.o: ../Logger.h
+CMakeFiles/mymuduo.dir/TcpConnection.o: ../Socket.h
+CMakeFiles/mymuduo.dir/TcpConnection.o: ../TcpConnection.cpp
+CMakeFiles/mymuduo.dir/TcpConnection.o: ../TcpConnection.h
+CMakeFiles/mymuduo.dir/TcpConnection.o: ../Timestamp.h
+CMakeFiles/mymuduo.dir/TcpConnection.o: ../noncopyable.h
+
+CMakeFiles/mymuduo.dir/TcpServer.o: ../Acceptor.h
+CMakeFiles/mymuduo.dir/TcpServer.o: ../Callbacks.h
+CMakeFiles/mymuduo.dir/TcpServer.o: ../Channel.h
+CMakeFiles/mymuduo.dir/TcpServer.o: ../CurrentThread.h
+CMakeFiles/mymuduo.dir/TcpServer.o: ../EventLoop.h
+CMakeFiles/mymuduo.dir/TcpServer.o: ../EventLoopThreadPool.h
+CMakeFiles/mymuduo.dir/TcpServer.o: ../InetAddress.h
+CMakeFiles/mymuduo.dir/TcpServer.o: ../Logger.h
+CMakeFiles/mymuduo.dir/TcpServer.o: ../Socket.h
 CMakeFiles/mymuduo.dir/TcpServer.o: ../TcpServer.cpp
 CMakeFiles/mymuduo.dir/TcpServer.o: ../TcpServer.h
+CMakeFiles/mymuduo.dir/TcpServer.o: ../Timestamp.h
+CMakeFiles/mymuduo.dir/TcpServer.o: ../noncopyable.h
 
 CMakeFiles/mymuduo.dir/Thread.o: ../CurrentThread.h
 CMakeFiles/mymuduo.dir/Thread.o: ../Thread.cpp

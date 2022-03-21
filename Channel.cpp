@@ -16,7 +16,7 @@ Channel::Channel(EventLoop *loop, int fd)
 Channel::~Channel() { 
 }
 
-// 在其他模块触发
+// 在其他模块触发:一个TcpConnection新连接创建的时候调用，TcpConnection=>Channel
 void Channel::tie(const std::shared_ptr<void>& obj) {
   tie_ = obj; // weak观察强智能指针
   tied_ = true;
