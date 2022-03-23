@@ -102,6 +102,7 @@ CMakeFiles/mymuduo.dir/TcpConnection.o
  /home/melody/mymoduo/noncopyable.h
 CMakeFiles/mymuduo.dir/TcpServer.o
  /home/melody/mymoduo/Acceptor.h
+ /home/melody/mymoduo/Buffer.h
  /home/melody/mymoduo/Callbacks.h
  /home/melody/mymoduo/Channel.h
  /home/melody/mymoduo/CurrentThread.h
@@ -110,6 +111,7 @@ CMakeFiles/mymuduo.dir/TcpServer.o
  /home/melody/mymoduo/InetAddress.h
  /home/melody/mymoduo/Logger.h
  /home/melody/mymoduo/Socket.h
+ /home/melody/mymoduo/TcpConnection.h
  /home/melody/mymoduo/TcpServer.cpp
  /home/melody/mymoduo/TcpServer.h
  /home/melody/mymoduo/Timestamp.h
