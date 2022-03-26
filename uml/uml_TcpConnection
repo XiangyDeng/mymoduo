@@ -1,0 +1,60 @@
+@startuml
+scale 2
+skinparam dpi 800
+' 继承：  <|--  --|>  '
+' 聚合：  o--  --o  '
+' 组合：  *-- --*  '
+' 双向关联：  --  '
+' \n 表示换行 '
+
+enum stateE {
+  kDisconnected, 
+  kConnecting, 
+  kConnected, 
+  kDisconnecting
+}
+
+class TcpConnection {
+  + TcpConnection(*loop,nameArg,sockfd,localAddr,peerAddr) // 并设置回调
+  + bool connected() const { return state_ == kConnected; }
+  + send(const std::string &buf) // 调用sendInLoop
+  + sendInLoop(const void* data, size_t len) // 应用写的快， 而内核发送数据慢， 需要把待发送数据写入缓冲区， 而且设置了水位回调
+  + shutdown() // 关闭连接
+  + setConnectionCallback() //设置回调
+  + connectEstablished() // 建立连接：channel的weak_ptr绑定连接，并向epoll注册写事件
+  + connectDestroyed() // 关闭连接
+  + handleRead() // 从buffer中读取数据，并调用回调函数：messageCallback_
+  + handleWrite() // 从buf中读数据
+  + handleClose() // poller => channel::closeCallback => TcpConnection::handleClose
+  + handleError() // 返回sock错误errno
+  - EventLoop *loop_ // subLoop，TcpConnection都是在subloop里进行管理
+  - const std::string name_  // 连接名字
+  - std::atomic_int state_ // 原子操作的状态
+  - std::unique_ptr<Socket> socket_ // 这里与Acceptor类似 Accept在mainloop里，TcpConnection是在subLoop里
+  - std::unique_ptr<Channel> channel_ // sockect接收tcp连接，channel处理回调
+  - const InetAddress localAddr_ // 主机地址（IpPort）
+  - const InetAddress peerAddr_  // 连接对端地址
+  - connectionCallback_，messageCallback_，writeCompleteCallback_，highWaterMarkCallback_，closeCallback_
+}
+note "相对于Acceptor多了数据读写的函数" AS UTCPCONNECTION
+UTCPCONNECTION -- TcpConnection
+
+
+class Buffer {
+  + Buffer(kInitialSize)
+  
+
+  - static const size_t kInitialSize = 1024 // 缓存区初始大小
+  - static const size_t kCheapPrepend = 8 // 8 byte?
+  - std::vector<char> buffer_ // 缓存数据结构
+  - readerIndex_ // 读数据区index
+  - writerIndex_ // 写数据区index
+}
+note "prependable bytes ->  readable bytes -> writable bytes\n * 0             readerIndex (contebr) writerIndex      size" AS UBUFFER
+UBUFFER -- Buffer
+
+
+stateE --* TcpConnection : > 表示连接状态
+Buffer --* TcpConnection
+
+@enduml

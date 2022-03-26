@@ -83,7 +83,7 @@ void TcpConnection::send(const std::string &buf)
 }
 
 /**
- * 发送数据  应用写的快， 而内核发送数据慢， 需要把待发送数据写入缓冲区， 而且设置了水位回调
+ * TODO 发送数据  应用写的快， 而内核发送数据慢， 需要把待发送数据写入缓冲区， 而且设置了水位回调
  */ 
 void TcpConnection::sendInLoop(const void* data, size_t len)
 {

@@ -70,7 +70,7 @@ class TcpConnection : noncopyable , public std::enable_shared_from_this<TcpConne
   std::atomic_int state_;
   bool reading_;
 
-  // 这里与Acceptor类似 Accept在mainloop里 || TcpConnection实在subLoop里
+  // 这里与Acceptor类似 Accept在mainloop里，TcpConnection是在subLoop里
   std::unique_ptr<Socket> socket_;
   std::unique_ptr<Channel> channel_;
 

@@ -21,4 +21,6 @@ interface Test {
 note "EventLoopThreadPool" AS N1
 N1 .. TcpServer
 
+TcpServer -* EchoServer : < last
+
 @enduml
