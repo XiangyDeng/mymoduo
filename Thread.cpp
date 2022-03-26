@@ -12,11 +12,11 @@ Thread::Thread(ThreadFunc func, const std::string &name)
     , name_(name)
     , func_(func) {
       setDefaultName();
-
 }
+
 Thread::~Thread() {   // 一个Thread对象记录的就是一个新线程的详细信息
   if (started_ && !joined_) {
-    thread_->detach();  // thread类提供的设置分离线程的方法：守护线程（pthread_detech）
+    thread_->detach();  // thread类提供的设置分离线程的方法：守护线程（pthread_detach）
   }
 }
 

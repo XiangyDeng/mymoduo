@@ -1,0 +1,90 @@
+@startuml
+scale 2
+skinparam dpi 1600
+' 继承：  <|--  --|>  '
+' 聚合：  o--  --o  '
+' 组合：  *-- --*  '
+' 双向关联：  --  '
+' \n 表示换行 '
+
+class EventLoop { 
+  + EventLoop::EventLoop() // 创建poller、wakeupFd_、wakeupChannel_与currentActiveChannel_
+  + loop() // 1.监听epoll_wait 2.通过channel handleEvent 3.执行当前EventLoop事件循环的回调
+  + wakeup() // 向wakeupfd_写一个数据，唤醒subloop监听与处理事件
+  + runInLoop(cb) // 在当前loop中执行cb:直接执行，否则先放入loop，唤醒后执行
+  + queueInLoop(cb) // 把cb放入到数组中，唤醒loop所在线程，执行cb
+  + updateChannel(channel) // 调用Poller方法更改channel（带事件）
+  + doPendingFunctors() // 处理自身的回调：如在TcpConnection的连接断开事件中
+  - vector<Channel*> activeChannels_ // per loop 维护的channel (一)：sockfd
+  - Channel *currentActiveChannel_ // 事件表内活跃的事件
+  - int wakeupFd_ // mainLoop通过轮询算法选择并唤醒subLoop处理channel回调
+  - unique_ptr<Channel> wakeupChannel_ // channel（二）：处理wakefd_的channel
+  - unique_ptr<Poller> poller_ // per loop 的io复用epoll：检测事件的发生(sockfd wakefd)
+  - vector<Functor> pendingFunctors // 存储当前loop需要执行的回调
+  - const pid_t threadId_ // 记录当前loop所在的线程号！用于判断loop是否在对应thread
+}
+note "EventLoop为subReactor的中枢，\n分配线程后可进行事件的监听（Poller）与回调函数的执行（channel）" AS NLOOP
+NLOOP -left- EventLoop
+
+class Thread {
+  - shared_ptr<std::thread> thread_ // 使用智能指针管理thread，因为直接声明thread会直接开启线程，采用C++11线程库
+  - pid_t tid_ // 线程号 
+  - ThreadFunc func_ // 线程函数：传入EventLoopThread::threadFunc
+  + start() // 创建线程（智能指针），获取线程id
+  + join() // 等待其他线程结束
+  + setDefaultName()
+}
+
+interface CurrentThread {
+  + cacheTid() // // 通过系统调用获取当前线程的tid:::syscall(SYS_gettid)
+  + t_cachedTid // 线程id
+}
+
+abstract Poller {
+  + poll(int timeoutMS, ChannelList *activeChannel) = 0 // 所有IO复用保留统一的接口
+  + updateChannel(Channel *channel) = 0 
+  + removeChannel(Channel *channel) = 0
+  + static Poller* newDefaultPoller(EventLoop *loop)  // 通过该函数（定义在其他cpp文件）设置Poller实例，门票认为Epoll
+  - unordered_map<int, Channel*> 
+  - EventLoop *ownerLoop_
+}
+
+class EpollPoller {
+  + EpollPoller(*loop)
+  + poll(timeoutMS,*activeChannel) override
+  + updateChannel(*channel) override
+  + removeChannel(*channel) override
+  - fillActiveChannels(numEvents,*activeChannels) // 填写活跃的连接
+  - update(operation,*channel) // 更新Channel通道（epoll_ctl的调用）
+  - static const int kInitEventListSize = 16 // 事件数量
+  - vector<epoll_event> events_ // loop内的事件数量
+  - int epollfd_ // 每个loop维护的内核事件表
+}
+
+class Channel {
+  + Channel(*loop,fd) 
+  + handleEvent() // 处理事件，判断tie，调用子函数
+  + handleEventWithGuard() // Channel负责调用具体的回调操作
+  + tie(const std::shared_ptr<void>&) // 使用weak_ptr观察对应的TcpConnection是否还在，并在该函数中升级为shared_ptr判断
+  + void enableReading() // 设置fd相应的事件状态
+  - update() // 通过loop调用Poller更新event事件
+  - remove() //同上
+  - static const int kNoneEvent // 当前状态描述，同kReadEvent、kWriteEvent
+  - EventLoop *loop_ // channel所处事件循环
+  - const int fd_    // fd, poller监听的对象，与Poller为多对一的关系
+  - int events_      // 注册sockfd感兴趣的event事件
+  - int revents_     // poller返回具体发生的事件（epoll特色）
+  -   int index_ // 表示该channel是kAdded、kNew、还是kDeleted
+  - std::weak_ptr<void> tie_ // void接收所有类型：绑定自己
+  - ReadEventCallback readCallback_ // 因为Channel通道里能够获取fd最终发生的具体事件revents，所以他负责调用具体事件的回调操作
+} 
+note "// 在其他模块触发tie():一个TcpConnection新连接创建的时候调用，TcpConnection=>Channel,\n 防止channel在执行回调的时候TcpConnection被手动删掉" AS NCHANNEL
+NCHANNEL -- Channel
+
+EpollPoller --* EventLoop
+Channel --* EventLoop
+Thread --* EventLoop
+CurrentThread --* Thread
+EpollPoller --> Poller
+
+@enduml

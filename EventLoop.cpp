@@ -18,7 +18,7 @@ const int kPollTimeMs = 10000;
 
 // 创建wakeupfd，用来notify唤醒subReactor处理信赖的channel
 int createEventfd() {
-  int evtfd = ::eventfd(0, EFD_NONBLOCK | EFD_CLOEXEC);
+  int evtfd = ::eventfd(0, EFD_NONBLOCK | EFD_CLOEXEC); // 非阻塞 + fork不遗传父类
   if (evtfd < 0) {
     LOG_FATAL("eventfd error:%d \n",errno);
   }
@@ -36,37 +36,27 @@ EventLoop::EventLoop()
       currentActiveChannel_(nullptr) {
     
     LOG_DEBUG("EventLoop created %p in thread %d \n", this, threadId_);
+    // one thread one loop
     if (t_loopInThisThread) {
       LOG_FATAL("Another EventLoop %p exists in this thread %d \n", t_loopInThisThread, threadId_);
     } else {
       t_loopInThisThread = this;
     }
 
-    // 设置wakeupfd的事件类型以及发生事件后的回调函数
+    // 设置wakeupfd的事件类型 以及 发生事件后的回调函数
     wakeupChannel_->setReadCallback(std::bind(&EventLoop::handleRead, this));
     // 每一个EventLoop都将监听wakeupChannel的EPOLLIN读事件
     wakeupChannel_->enableReading();
 }
 
 EventLoop::~EventLoop() {
-    wakeupChannel_->disableAll();
+    wakeupChannel_->disableAll(); 
     wakeupChannel_->remove();
     ::close(wakeupFd_);
-    t_loopInThisThread = nullptr;
+    t_loopInThisThread = nullptr; // 
 
 }
 
-// 开启事件循环：调用底层Poller，开启事件分发器
-// 1.loop在自己的线程中调用quit. 2.在非loop的线程中调用loop的quit
-void EventLoop::loop() {
-  quit_ = true;
-
-  // 如果是在其他线程中调用quit，例如在一个subloop(worker)中调用了mainloop的quit
-  if (!isInLoopThread()) {
-    wakeup();
-  }
-
-}
 // 退出事件循环
 /**
  * 退出事件循环：1.loop在自己的线程中调用quit 2. 在非loop的线程中，调用loop的quit 
@@ -77,6 +67,16 @@ void EventLoop::loop() {
  *        subLoop1      subLoop2        subLoop3
  */
 void EventLoop::quit() {
+  quit_ = true;
+
+  // 如果是在其他线程中调用quit，例如在一个subloop(worker)中调用了mainloop(IO)的quit
+  if (!isInLoopThread()) {
+    wakeup();
+  }
+}
+
+// 开启事件循环：调用底层Poller，开启事件分发器
+void EventLoop::loop() {
   looping_ = true;
   quit_ = false;
 
@@ -110,11 +110,11 @@ void EventLoop::quit() {
 void EventLoop::runInLoop(Functor cb) {
   if (isInLoopThread()) { // 在当前的loop线程中，执行cb；
     cb();
-  } else {  // 在非当前loop线程中执行cb，就需要唤醒loop所在线程，执行cb
+  } else {  //* 在非当前loop线程中执行cb，就需要唤醒loop所在线程，执行cb
     queueInLoop(cb);
   }
 }
-// 把cb放入到队列中，唤醒loop所在线程，执行cb
+//? 把cb放入到队列（数组？）中，唤醒loop所在线程，执行cb
 void EventLoop::queueInLoop(Functor cb) {
   {
     std::unique_lock<std::mutex> lock(mutex_);
@@ -159,7 +159,7 @@ bool EventLoop::hasChannel(Channel *channel) {
 }
 
 void EventLoop::doPendingFunctors() {
-  std::vector<Functor> functors;
+  std::vector<Functor> functors;  // 交给栈对象处理：自动清除
   callingPendingFunctors_ = true;
 
   {

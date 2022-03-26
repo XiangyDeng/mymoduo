@@ -1,0 +1,62 @@
+@startuml
+scale 2
+skinparam dpi 800
+' 继承：  <|--  --|>  '
+' 聚合：  o--  --o  '
+' 组合：  *-- --*  '
+' 双向关联：  --  '
+
+Entity EchoServer {
+  1. 初始化server_ ： server_(loop_, addr, name）
+  2. 注册回调函数
+  3. 设置合适的loop线程数量(subReaction)）
+}
+
+class TcpServer {
+  + TcpServer(EventLoop,InetAddress,string,Option) // 构造函数
+  + setThreadInitCallback(cb) // 回调函数
+  + start() // 开启服务器监听
+  - newConnection(sockfd,peerAddr)
+  - removeConnection(conn)
+  - removeConnectionInLoop(conn)
+  - EventLoop *loop_ // baseLoop
+  - const std::string ipPort_
+  - const std::string name_
+  - unique_ptr<Acceptor> acceptor_
+  - shared_ptr<EventLoopThreadPool> threadPool_
+  - ConnectionCallback connectionCallback_
+  - std::atomic_int started_
+  - int nextConnId_ ConnectionMap connections_
+}
+
+class EventLoopThreadPool {
+  - EventLoop *baseLoop_ // mainLoop
+  - std::string name_
+  - int next_   // 从0开始，使用轮询方式寻找可用loop
+  - vector<unique_ptr<EventLoopThread>> threads_ // 每个thread
+  - vector<EventLoop*> loops_ // 每个loop
+  + EventLoopThreadPool(baseloop,nameArg) // 构造函数
+  + EventLoop* getNextLoop() // 轮询分配channel给subReactor
+  + void start(ThreadInitCallback)  // 静态构建线程池，命名+单线程初始化+智能指针管理
+}
+note "关键在于构建线程池（动态构建，静态分配）以及如何轮询分配subLoop，\n 并使用智能指针管理每个线程（自动析构）" AS N1
+N1 .. EventLoopThreadPool
+
+class EventLoopThread {
+  - EventLoop *loop_   // one loop per thread!!!
+  - Thread thread_
+  - mutex mutex_       // 线程同步与互斥
+  - condition_variable cond_
+  - ThreadInitCallback callback_ // 线程初始化完成回调
+  + EventLoop* EventLoopThread::startLoop() // 新线程会自动创建EventLoop（条件变量等待分配loop），并返回
+  + EventLoopThread::threadFunc() // 在新subloop线程中执行loop
+}
+
+
+
+
+TcpServer -- EchoServer
+EventLoopThreadPool -left-* TcpServer
+EventLoopThread  -up-* EventLoopThreadPool
+
+@enduml

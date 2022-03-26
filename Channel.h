@@ -52,7 +52,7 @@ class Channel : noncopyable {
   }
 
 
-  // 设置fd相应的事件状态
+  // ! 设置fd相应的事件状态: channel中可更新Poller状态
   void enableReading() {
     events_ |= kReadEvent;
     update();
@@ -114,7 +114,7 @@ class Channel : noncopyable {
   int revents_;      // poller返回具体发生的事件（epoll特色）
   int index_;
 
-  std::weak_ptr<void> tie_; // void接收所有类型：绑定自己(share _from_this?)
+  std::weak_ptr<void> tie_; // void接收所有类型：绑定自己(shared _from_this？：返回一个当前类的std::share_ptr,)
   bool tied_;
 
   // 因为Channel通道里能够获取fd最终发生的具体事件revents，所以他负责调用具体事件的回调操作

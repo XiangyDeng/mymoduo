@@ -68,5 +68,14 @@
         "future": "cpp",
         "source_location": "cpp",
         "*.ipp": "cpp"
-    }
+    },
+    "cSpell.words": [
+        "Demultiplex",
+        "enduml",
+        "endwhile",
+        "epollfd",
+        "EPOLLIN",
+        "revt",
+        "startuml"
+    ]
 }

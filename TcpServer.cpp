@@ -28,11 +28,11 @@ TcpServer::TcpServer(EventLoop *loop,
           , threadPool_(new EventLoopThreadPool(loop, name_))
           , connectionCallback_()
           , messageCallback_()
+          , started_(false)
           , nextConnId_(1) {
     // 当有新用户连接时，会执行TcpServer::newConnection回调
     acceptor_->setNewConnectionCallback(std::bind(&TcpServer::newConnection, this, 
                                         std::placeholders::_1,  std::placeholders::_2));
-
 }
 
 TcpServer::~TcpServer() {
@@ -46,7 +46,6 @@ TcpServer::~TcpServer() {
     );
   }
 }
-
 
 // 有一个新的客户端连接，acceptor会执行这个回调操作
 void TcpServer::newConnection(int sockfd, const InetAddress &peerAddr) {  // peerAddr 为客户端请求

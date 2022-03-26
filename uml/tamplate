@@ -1,0 +1,24 @@
+@startuml
+scale 2
+skinparam dpi 800
+' 继承：  <|--  --|>  '
+' 聚合：  o--  --o  '
+' 组合：  *-- --*  '
+' 双向关联：  --  '
+' \n 表示换行 '
+
+
+Entity EchoServer {
+}
+
+class TcpServer {
+}
+
+interface Test {
+  
+}
+
+note "EventLoopThreadPool" AS N1
+N1 .. TcpServer
+
+@enduml

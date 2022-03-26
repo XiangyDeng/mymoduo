@@ -1,0 +1,28 @@
+@startuml
+scale 2
+skinparam dpi 800
+' 继承：  <|--  --|>  '
+' 聚合：  o--  --o  '
+' 组合：  *-- --*  '
+' 双向关联：  --  '
+' \n 表示换行 '
+
+
+class TcpConnection {
+
+}
+
+class Acceptor {
+  - EventLoop *loop_ // Acceptor用的就是用户定义的那个baseLoop，也称作mainLoop
+  - Socket acceptSocket_ // socket 封装类
+  - Channel acceptChannel_ // 负责listenfd的回调处理，baseloop => acceptChannel_(listenfd)
+  - NewConnectionCallback newConnectionCallback_ //当TcpServer有新用户连接时，会执行TcpServer::newConnection回调
+  + createNonblocking() // creat socket接口（调用::socket()）
+  + Acceptor() // 申请sock接口(listenfd),绑定地址，设置回调，并设置listenfd的channel
+  + listen()  // 调用 acceptSocket_的listen函数，并channel对应的event可读（EPOLL_IN | EPOLL_PRI）
+  + handleRead() // listenfd有用户连接，获取connfd与peeraddr，并通过TcpServer设置的回调，轮询找到唤醒subloop，创建TcpConnection连接对象
+}
+
+TcpConnection -- Acceptor : < Acceptor建立连接后通过TcpServer::newConnection建立连接
+
+@enduml

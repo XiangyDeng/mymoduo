@@ -16,6 +16,8 @@
 #include "noncopyable.h"
 #include "EventLoopThreadPool.h"
 #include "Callbacks.h"
+#include "TcpConnection.h"
+#include "Buffer.h"
 
 // 对外服务器编程使用的类
 class TcpServer : noncopyable {

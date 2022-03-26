@@ -19,7 +19,7 @@ Channel::~Channel() {
 // 在其他模块触发:一个TcpConnection新连接创建的时候调用，TcpConnection=>Channel
 void Channel::tie(const std::shared_ptr<void>& obj) {
   tie_ = obj; // weak观察强智能指针
-  tied_ = true;
+  tied_ = true; // 设置标志位
 }
 
 /**
@@ -29,20 +29,20 @@ void Channel::tie(const std::shared_ptr<void>& obj) {
  */
 void Channel::update() {
   // 通过Channel所属的EventLoop，调用Poller的相应方法注册fd的events事件
-  // add code...
-  // loop_->updateChannel(this);
+  // TODO: 
+  loop_->updateChannel(this);
 }
 
 // 在Channel所属的EventLoop中，把当前Channel删除掉
 void Channel::remove() {
-  // add code...
-  // loop_->removeChannel(this);
+  // TODO:
+  loop_->removeChannel(this);
 }
 
 void Channel::handleEvent(Timestamp receiveTime) {
   if (tied_) {
-    std::shared_ptr<void> guard = tie_.lock();
-    if (guard) {
+    std::shared_ptr<void> guard = tie_.lock();  // weak指针升级为shared指针, 指向TcpConnection
+    if (guard) {  // 若TcpConnection还在，则执行对应的回调函数，否则跳过，防止当Channel被手动remove掉，Channel还在执行回调操作
       handleEventWithGuard(receiveTime);
     }
   }

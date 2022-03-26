@@ -25,10 +25,15 @@
   }
   // 返回accept socket的fd与peeraddr
   int Socket::accept(InetAddress *peeraddr) {
+    /*
+     *  1. accept 函数参数不合法
+     *  2. 对返回的connfd没有设置阻塞
+     *  Reactor : poller+non_block IO
+    */
     sockaddr_in addr;
-    socklen_t len;
+    socklen_t len = sizeof addr;
     bzero(&addr, sizeof addr);
-    int connfd = ::accept(sockfd_, (sockaddr*)&addr, &len);
+    int connfd = ::accept4(sockfd_, (sockaddr*)&addr, &len, SOCK_NONBLOCK | SOCK_CLOEXEC);
     if (connfd > 0) {
       peeraddr->setSockAddr(addr);
     }

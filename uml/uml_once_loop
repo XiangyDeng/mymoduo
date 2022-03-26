@@ -1,0 +1,46 @@
+@startuml
+scale 2
+skinparam dpi 800
+' 继承：  <|--  --|>  '
+' 聚合：  o--  --o  '
+' 组合：  *-- --*  '
+' 双向关联：  --  '
+
+Entity EventLoop::loop {
+    1. 置位标志位: looping_ quit_
+    2. 当quit_不置位, 循环处理:
+    2a. 定时阻塞，监听 clientfd 与 wakeupfd 并返回activeChannels_
+    2b. channel循环处理Poller返回的事件: handleEvent（）
+    3. 执行当前EventLoop事件循环需要处理的回调操作:
+        doPendingFunctors（）
+}
+
+interface doPendingFunctors {
+    (mainlLoop专属回调操作处理函数？)
+    1. 利用swap函数转移到栈空间上的操作很骚
+    2. 循环处理functor（）
+    + () pendingFunctors_ : std::vector<Functor>
+    + () functors : std::vector<Functor>
+}
+
+class EpollPoller {
+    + Timestamp poll(int, ChannelList *activeChannel) // 监听fd: epoll_wait()
+    + fillActiveChannels() // 将epoll_wait获取的事件与每个channel相关联, 再返回给EventLoop
+    - int epollfd_; // 构造函数中epoll_create1，每个loop只有一个
+    - EventList events_; // 触发的事件，vector存储
+}
+
+abstract Poller {
+    - EventLoop *ownerLoop_  // 定义Poller所属的事件循环EventLoop
+    # ChannelMap channels_ // map的key：sockfd ， value：socket所属的channel通道类型
+    + static Poller* newDefaultPoller(EventLoop *loop);
+    + poll() = 0 // 给所有IO复用保留统一的接口
+    + updateChannel() = 0
+    + removeChannel() = 0
+}
+
+EventLoop::loop -- doPendingFunctors
+Poller <-- EpollPoller
+EventLoop::loop -- EpollPoller
+
+@enduml

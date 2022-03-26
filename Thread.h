@@ -29,7 +29,7 @@ class Thread : noncopyable {
   bool started_;
   bool joined_;   // 当前线程等待其他线程运行完毕再进行往下执行
   // 需要使用智能指针封装，因为直接声明thread会直接开启线程
-  std::shared_ptr<std::thread> thread_;
+  std::shared_ptr<std::thread> thread_; // 使用智能指针管理thread，采用C++11线程库
   pid_t tid_;
   ThreadFunc func_;
   std::string name_;
