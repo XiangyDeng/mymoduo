@@ -1,7 +1,8 @@
 # muduo网络库重写
 
 # 程序编译
-chmod +x build.sh \n
+chmod +x build.sh 
+
 sudo ./autobuild.sh
 
 # 程序运行
