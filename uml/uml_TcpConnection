@@ -53,7 +53,6 @@ class Buffer {
 note "prependable bytes ->  readable bytes -> writable bytes\n * 0             readerIndex (contebr) writerIndex      size" AS UBUFFER
 UBUFFER -- Buffer
 
-
 stateE --* TcpConnection : > 表示连接状态
 Buffer --* TcpConnection
 

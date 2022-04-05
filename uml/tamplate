@@ -7,7 +7,6 @@ skinparam dpi 800
 ' 双向关联：  --  '
 ' \n 表示换行 '
 
-
 Entity EchoServer {
 }
 
@@ -15,7 +14,7 @@ class TcpServer {
 }
 
 interface Test {
-  
+
 }
 
 note "EventLoopThreadPool" AS N1
