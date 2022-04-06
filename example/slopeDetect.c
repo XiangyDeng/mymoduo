@@ -2,7 +2,7 @@
 #include <stdlib.h>
 
 // 单位： rad / s
-float slopeDetect(const float data[], int len) {
+float slopeDetectTask(const float data[], int len) {
   const float INTERVAL = 1;
 
   float preDiff = data[1] - data[0];
@@ -39,7 +39,7 @@ int main() {
     data[i] = i*7;
   }
 
-  printf( "slope is: %f \n", slopeDetect(data, size));
+  printf( "slope is: %f \n", slopeDetectTask(data, size));
 
   return 0;
 }

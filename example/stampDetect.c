@@ -6,7 +6,7 @@
 
 using namespace std;
 
-bool stampDetect(const float data[], int len);
+bool stampDetectTask(const float data[], int len);
 
 int main() {
   float data[1000];
@@ -24,14 +24,14 @@ int main() {
   data[504] = 0.0;
   data[505] = 0.0;
 
-  if (stampDetect(data, len) == false) {
+  if (stampDetectTask(data, len) == false) {
     printf("detect errno. \n");
   }
 
   return 0;
 }
 
-bool stampDetect(const float data[], int len) {
+bool stampDetectTask(const float data[], int len) {
 
   enum Estate {
     firstUp,
